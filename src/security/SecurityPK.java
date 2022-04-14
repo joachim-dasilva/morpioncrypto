@@ -12,6 +12,10 @@ public class SecurityPK {
 	private PrivateKey keyPrivate;
 	private Cipher cipher;
 
+	
+	/**
+	 * génère une clé publique
+	 */
 	public SecurityPK() {
 		try {
 			cipher = Cipher.getInstance("RSA");
@@ -19,6 +23,12 @@ public class SecurityPK {
 		}
 	}
 
+	
+	/**
+	 * Défini l'attribut keyPublic avec la clé publique donnée en paramètre
+	 * 
+	 * @param la clé publique encodée
+	 */
 	public void setPublicKey(byte[] keyPublicEncoded) {
 		try {
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
@@ -33,6 +43,10 @@ public class SecurityPK {
 		}
 	}
 
+	
+	/**
+	 * Génère un couple clé publique et clé privée
+	 */
 	public KeyPair generateKeys() {
 		try {
 			KeyPairGenerator keygen = KeyPairGenerator.getInstance("RSA");
@@ -46,10 +60,21 @@ public class SecurityPK {
 		return null;
 	}
 
+	/**
+	 * récupère la clé publique
+	 * 
+	 * @return la clé publique
+	 */
 	public PublicKey getPublicKey() {
 		return keyPublic;
 	}
 
+	
+	/**
+	 * Crypt un message (sous forme de chaine de charactère) à l'aide de la clé publique
+	 * 
+	 * @param message à crypter
+	 */
 	private byte[] encrypt(String message) {
 		try {
 			cipher.init(Cipher.ENCRYPT_MODE, this.keyPublic);
@@ -59,6 +84,12 @@ public class SecurityPK {
 		return new byte[0];
 	}
 
+	
+	/**
+	 * Crypt un message (sous forme de taleau d'octet) à l'aide de la clé publique
+	 * 
+	 * @param message à crypter
+	 */
 	public byte[] encrypt(byte[] messageEncoded) {
 		try {
 			cipher.init(Cipher.ENCRYPT_MODE, this.keyPublic);
@@ -68,6 +99,12 @@ public class SecurityPK {
 		return null;
 	}
 
+	
+	/**
+	 * Décrypt un message à l'aide de la clé privée
+	 * 
+	 * @param message
+	 */
 	public byte[] decrypt(byte[] message) {
 		try {
 			cipher.init(Cipher.DECRYPT_MODE, this.keyPrivate);
