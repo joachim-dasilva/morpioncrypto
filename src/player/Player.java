@@ -7,6 +7,7 @@ import java.net.Socket;
 
 import security.SecurityPK;
 import security.SecuritySK;
+import util.Print;
 
 public class Player {
 	private SecurityPK rsa;
@@ -23,7 +24,6 @@ public class Player {
 			this.in = new DataInputStream(socket.getInputStream());
 			this.out = new DataOutputStream(socket.getOutputStream());
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 
 		waitForPublicKey();
@@ -35,7 +35,6 @@ public class Player {
 		try {
 			this.in.read(publicKey, 0, 1024);
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		this.rsa.setPublicKey(publicKey);
 	}
@@ -46,7 +45,6 @@ public class Player {
 		try {
 			this.out.write(secretKeyEncript);
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -55,7 +53,6 @@ public class Player {
 		try {
 			this.out.write(messageEncoded);
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 }

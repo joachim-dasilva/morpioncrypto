@@ -39,10 +39,10 @@ class Client extends Thread {
 			this.secret.setSecretKey(secretKeyDecoded);
 
 			while (true) {
-				mess = new byte[8];
+				mess = new byte[64];
 				in.readFully(mess); // Lecture du message entrant (venant du serveur). Il s'agit d'un code qui,
-				Print.test("" + mess.length);
 				mess = this.secret.decrypt(mess);
+
 				switch (new String(mess).substring(0, 3)) { // une fois interprété, éxécute l'un des cas ci-dessous.
 				case "100":
 					System.out.println("[Morpion] En attente d'un deuxième joueur...");
