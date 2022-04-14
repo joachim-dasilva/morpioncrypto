@@ -6,8 +6,8 @@ public class Morpion {
 	public Morpion() {
 	}
 
-	/*
-	 * Récupérer la valeur de la case du morpion
+	/**
+	 * Récupère la valeur de la case du morpion
 	 */
 	public int getValueAtIndex(int index) {
 		int row = 0;

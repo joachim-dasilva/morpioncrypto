@@ -12,10 +12,16 @@ class Server extends Thread {
 	private static ArrayList<Server> clients = new ArrayList<Server>();
 	private ServerSocket socket = null;
 
+	
 	public Server(ServerSocket socket) {
 		this.socket = socket;
 	}
 
+	/**
+	 * Méthode définie par la classe Thread.
+	 * Elle permet de lancer la socket et d'attendre les connexions des joueurs.
+	 * Elle créé aussi des groupes de 2 joueurs.
+	 */
 	public void run() {
 		try {
 			Player player = new Player(this.socket.accept());
