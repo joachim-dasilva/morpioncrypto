@@ -11,12 +11,21 @@ public class Game {
 	private int winner = 0;
 	private int tour = 0;
 
+	/**
+	 * Initialise le morpion ainsi et ajoute les joueurs au jeu
+	 * 
+	 * @param joueur 1 (premier client connecté)
+	 * @param joueur 1 (deuxième client connecté)
+	 */
 	public Game(Player player1, Player player2) {
 		this.player1 = player1;
 		this.player2 = player2;
 		this.morpion = new Morpion();
 	}
 
+	/**
+	 * Permet de gérer le déroulement de la partie
+	 */
 	public void start() {
 		player1.sendMessage(sendResponse(101, morpion));
 		player2.sendMessage(sendResponse(101, morpion));
@@ -64,6 +73,13 @@ public class Game {
 		}
 	}
 
+	
+	/**
+	 * Ajoute le jeton du joueur ayant envoyé le message sur le morpion
+	 * 
+	 * @param client ayant envoyé le message
+	 * @return la position du jeton
+	 */
 	private int playerTour(Player player) {
 		int position = readResponse(player);
 		// Vérification de la validité des données récupérées
@@ -79,16 +95,26 @@ public class Game {
 		return position;
 	}
 
-	/*
-	 * Réponse à envoyer à un joueur
+	
+	/**
+	 * Transforme le code envoyé par le serveur (entier entre 100 et 500) ainsi que le morpion
+	 * en tableau d'octets pour pouvoir l'envoyer au client
+	 * 
+	 * @param code envoyé par le serveur
+	 * @param le morpion
+	 * @return le code et le morpion sous forme de tableau d'octets
 	 */
 	private byte[] sendResponse(int code, Morpion morpion) {
 		String response = Integer.toString(code) + " : " + morpion.toString();
 		return response.getBytes();
 	}
 
-	/*
-	 * Lecture du message d'un joueur
+	
+	/**
+	 * Lis le message envoyé par le client
+	 * 
+	 * @param le joueur ayant envoyé le message
+	 * @return le message envoyé par le client
 	 */
 	private int readResponse(Player player) {
 		try {

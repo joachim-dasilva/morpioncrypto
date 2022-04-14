@@ -14,13 +14,19 @@ class Client extends Thread {
 	private SecuritySK secret;
 	private SecurityPK rsa;
 
-	// Cosntructor
+	// Constructor
 	public Client(Socket s) {
 		this.socket = s;
 		this.secret = new SecuritySK();
 		this.rsa = new SecurityPK();
 	}
 
+	/**
+	 * Méthode définie par la classe Thread.
+	 * Elle permet d'attendre la réponse du serveur afin de la traité.
+	 * La réponse du serveur doit être un entier compris entre 100 et 500.
+	 * En fonction de la réponse reçue, le client peut envoyer un message au serveur
+	 */
 	public void run() {
 		DataInputStream in;
 		DataOutputStream out;
