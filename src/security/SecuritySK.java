@@ -5,15 +5,13 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import util.Print;
-
 public class SecuritySK {
 	private SecretKey secretKey;
 	private Cipher cipher;
 
 	
 	/**
-	 * génère une clé secrète
+	 * instancie le type de cryptage
 	 */
 	public SecuritySK() {
 		try {
@@ -40,7 +38,7 @@ public class SecuritySK {
 
 	
 	/**
-	 * défini l'attribut secretKey avec la clé secrète donnée en paramètre
+	 * convertis la clé secrète de tableau d'octet en SecretKey
 	 * 
 	 * @param la clé encodée
 	 */

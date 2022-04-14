@@ -14,7 +14,7 @@ public class SecurityPK {
 
 	
 	/**
-	 * génère une clé publique
+	 * instancie le type de cryptage
 	 */
 	public SecurityPK() {
 		try {
@@ -22,7 +22,6 @@ public class SecurityPK {
 		} catch (Exception e) {
 		}
 	}
-
 	
 	/**
 	 * Défini l'attribut keyPublic avec la clé publique donnée en paramètre
@@ -35,10 +34,8 @@ public class SecurityPK {
 			EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(keyPublicEncoded);
 			this.keyPublic = keyFactory.generatePublic(publicKeySpec);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -68,22 +65,6 @@ public class SecurityPK {
 	public PublicKey getPublicKey() {
 		return keyPublic;
 	}
-
-	
-	/**
-	 * Crypt un message (sous forme de chaine de charactère) à l'aide de la clé publique
-	 * 
-	 * @param message à crypter
-	 */
-	private byte[] encrypt(String message) {
-		try {
-			cipher.init(Cipher.ENCRYPT_MODE, this.keyPublic);
-			return cipher.doFinal(message.getBytes());
-		} catch (Exception e) {
-		}
-		return new byte[0];
-	}
-
 	
 	/**
 	 * Crypt un message (sous forme de taleau d'octet) à l'aide de la clé publique

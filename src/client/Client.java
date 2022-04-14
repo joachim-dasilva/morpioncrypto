@@ -29,7 +29,7 @@ class Client extends Thread {
 		try {
 			in = new DataInputStream(this.socket.getInputStream());
 			out = new DataOutputStream(this.socket.getOutputStream());
-			
+
 			// Génération de la clé publique (et clé privée)
 			this.rsa.generateKeys();
 			out.write(this.rsa.getPublicKey().getEncoded());
@@ -39,9 +39,9 @@ class Client extends Thread {
 			this.secret.setSecretKey(secretKeyDecoded);
 
 			while (true) {
-				mess = new byte[128];
-				in.read(mess, 0, 128); // Lecture du message entrant (venant du serveur). Il s'agit d'un code qui,
-				Print.test(""+mess.length);
+				mess = new byte[8];
+				in.readFully(mess); // Lecture du message entrant (venant du serveur). Il s'agit d'un code qui,
+				Print.test("" + mess.length);
 				mess = this.secret.decrypt(mess);
 				switch (new String(mess).substring(0, 3)) { // une fois interprété, éxécute l'un des cas ci-dessous.
 				case "100":
