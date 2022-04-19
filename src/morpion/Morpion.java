@@ -18,8 +18,8 @@ public class Morpion {
 		return grid[row][index - 1];
 	}
 
-	/*
-	 * Placer le jeton d'un joueur sur le morpion
+	/**
+	 * Place le jeton d'un joueur sur le morpion
 	 */
 	public void placeToken(int a, int player) {
 		int row = 0;
@@ -30,7 +30,7 @@ public class Morpion {
 		grid[row][a - 1] = player;
 	}
 
-	/*
+	/**
 	 * Vérification de l'état du morpion
 	 */
 	public int winConditions() {
@@ -80,6 +80,9 @@ public class Morpion {
 		return 0;
 	}
 
+	/**
+	 * Converti le morpion pour en faire une représentation graphique pour le client
+	 */
 	@Override
 	public String toString() {
 		String result = "";

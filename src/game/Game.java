@@ -15,7 +15,7 @@ public class Game {
 	 * Initialise le morpion ainsi et ajoute les joueurs au jeu
 	 * 
 	 * @param joueur 1 (premier client connecté)
-	 * @param joueur 1 (deuxième client connecté)
+	 * @param joueur 2 (deuxième client connecté)
 	 */
 	public Game(Player player1, Player player2) {
 		this.player1 = player1;

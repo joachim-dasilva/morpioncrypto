@@ -14,7 +14,12 @@ class Client extends Thread {
 	private SecuritySK secret;
 	private SecurityPK rsa;
 
-	// Constructor
+	/**
+	 * Initialisation de la socket
+	 * génère une clé secrète ainsi qu'une clé publique
+	 * 
+	 * @param socket
+	 */
 	public Client(Socket s) {
 		this.socket = s;
 		this.secret = new SecuritySK();
@@ -50,28 +55,34 @@ class Client extends Thread {
 				mess = this.secret.decrypt(mess);
 
 				switch (new String(mess).substring(0, 3)) { // une fois interprété, éxécute l'un des cas ci-dessous.
+
+				// OK, en attente d’un deuxième joueur - attribution joueur n°1
 				case "100":
 					System.out.println("[Morpion] En attente d'un deuxième joueur...");
 					break;
+				// Lancement de la partie - attribution joueur n°2
 				case "101":
 					System.out.println("[Morpion] Lancement de la partie !");
 					break;
+				// Tour du joueur courant
 				case "201":
 					System.out.println(new String(mess).substring(6));
 					System.out.println("[Morpion - Partie en cours] C'est à votre tour !");
 					System.out.println("Choisir une position :");
 					reader = new BufferedReader(new InputStreamReader(System.in));
-					out.write(reader.readLine().getBytes()); // Lecture du message sortant sous forme de tableau de
-																// Bytes
+					out.write(reader.readLine().getBytes()); // Lecture du message sortant sous forme de tableau d'octets
 					break;
+				// Tour adverse
 				case "202":
 					System.out.println(new String(mess).substring(6));
 					System.out.println("[Morpion  - Partie en cours] C'est au tour de l'adversaire !");
 					break;
+				// Egalité (Fin de la partie)
 				case "203":
 					System.out.println(new String(mess).substring(6));
 					System.out.println("[Morpion - Egalité] Aucun gagnant !");
 					break;
+				// Victoire (Fin de la partie)
 				case "204":
 					System.out.println(new String(mess).substring(6));
 					System.out.println("[Morpion - Victoire] Félicitations, vous avez gagné !");
@@ -80,6 +91,7 @@ class Client extends Thread {
 					} catch (IOException ex) {
 					}
 					break;
+				// Défaite (Fin de la partie)
 				case "205":
 					System.out.println(new String(mess).substring(6));
 					System.out.println("[Morpion - Défait] Dommage, vous avez perdu !");
@@ -88,27 +100,28 @@ class Client extends Thread {
 					} catch (IOException ex) {
 					}
 					break;
-				case "401": // Les codes 400 représentent les erreurs. Dans le cas où l'on reçoit une
-							// erreur,
-					System.out.println("[Morpion - Erreur] Jeton déjà sur la case"); // on écrit affiche le message
-																						// d'erreur et on demande au
-																						// joueur de renvoyer son choix
+				// Jeton déjà sur la case
+				case "401":
+					System.out.println("[Morpion - Erreur] Jeton déjà sur la case");
 					System.out.println("Choisir une nouvelle position :");
 					reader = new BufferedReader(new InputStreamReader(System.in));
 					out.write(reader.readLine().getBytes());
 					break;
+				// Les coordonnées n’ont pas été trouvées
 				case "404":
 					System.out.println("[Morpion - Erreur] Coordonnées inexistantes");
 					System.out.println("Choisir une nouvelle position :");
 					reader = new BufferedReader(new InputStreamReader(System.in));
 					out.write(reader.readLine().getBytes());
 					break;
+				// Format de données non autorisé
 				case "405":
 					System.out.println("[Morpion - Erreur] Format non autorisé");
 					System.out.println("Choisir une nouvelle position :");
 					reader = new BufferedReader(new InputStreamReader(System.in));
 					out.write(reader.readLine().getBytes());
 					break;
+				// L’adversaire s’est déconnecté
 				case "500":
 					System.out.println("L\'adversaire s'est déconnecté");
 				}
@@ -129,8 +142,7 @@ class Client extends Thread {
 			Boolean isConnected = true;
 			new Client(sockclient).start();
 			while (true) {
-			} // Sert à rester dans le try pour ne pas aller dans le finally (fermeture de la
-				// socket)
+			} // Sert à rester dans le try pour ne pas aller dans le finally (fermeture de la socket)
 		} finally {
 			try {
 				sockclient.close();

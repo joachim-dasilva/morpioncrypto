@@ -16,6 +16,11 @@ public class Player {
 	public DataOutputStream out;
 	public DataInputStream in;
 
+
+	/**
+	 * Génère une clé secrète et une clé publique
+	 * Récupère la clé publique du serveur et envoi la clé secrète au serveur
+	 */
 	public Player(Socket socket) {
 		this.rsa = new SecurityPK();
 		this.secret = new SecuritySK();
@@ -30,6 +35,10 @@ public class Player {
 		sendSecretKey();
 	}
 
+
+	/**
+	 * Récupère la clé publique du serveur et attribut la clé à la clé RSA
+	 */
 	private void waitForPublicKey() {
 		byte[] publicKey = new byte[1024];
 		try {
@@ -39,6 +48,10 @@ public class Player {
 		this.rsa.setPublicKey(publicKey);
 	}
 
+
+	/**
+	 * Envoi la clé secrète encryptée vers le serveur
+	 */
 	private void sendSecretKey() {
 		byte[] secretKeyGenerated = this.secret.generateSecretKey();
 		byte[] secretKeyEncript = this.rsa.encrypt(secretKeyGenerated);
@@ -48,6 +61,10 @@ public class Player {
 		}
 	}
 
+
+	/**
+	 * Envoi un message encrypté vers le serveur
+	 */
 	public void sendMessage(byte[] message) {
 		byte[] messageEncoded = this.secret.encrypt(new String(message));
 		try {
